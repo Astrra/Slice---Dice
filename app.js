@@ -9,4 +9,14 @@ app.use(bodyParser.json());
 // In-memory data structure to store the dataset
 const dataset=[];
 
-// Function to validate payload schema
+// API to add a new record
+app.post('/add_record', (req,res) =>{
+    const payload = req.body;
+
+    if(!validatePayload(payload, ['name', 'salary', 'currency', 'department', 'sub-department'])){
+        return res.status(400).json({ error: 'Invalid payload'});
+    }
+
+    dataset.push(payload);
+    res.status(201).json({ message: 'Record added successfully' });
+});
